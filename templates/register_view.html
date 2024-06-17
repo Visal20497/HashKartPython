@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href={{url_for('static',filename='bootstrap.min.css' )}}>
+    <title>🍹 -resgitration</title>
+</head>
+
+<body class="text-center bg-success-subtle">
+    {% include 'navbar.html' %}
+    <h1 class="text-info m-2 p-2">Registration From</h1>
+    {% if error %}
+    <p class="text-danger">{{ error}}</p>
+
+    {% endif %}
+    <div class="d-flex container flex-column justify-content-center align-items-center w-50 ">
+        <form action="/register" method="post"
+            class="form-control bg-body-tertiary d-flex container flex-column justify-content-center align-items-center">
+            <div class="m-1 p-1">
+                <label class="form-label for=" username">Username:</label>
+                <input type="text" id="username" name="username" required placeholder="Enter your name"></br>
+            </div>
+            <div class="m-1 p-1">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required></br>
+            </div>
+            <div class="m-1 p-1">
+                <label for="username">Password:</label>
+                <input type="password" id="username" name="password" required placeholder="Enter your password"></br>
+            </div>
+            <div class="m-1 p-1">
+                <label for="username">Phone:</label>
+                <input type="text" id="username" name="phone" required placeholder="Enter your mobile no."></br>
+            </div class="m-1 p-1">
+            <input type="submit" class="btn btn-primary" value="Register">
+        </form>
+        <p>Already have an account? <a  href="/login">Login</a></p>
+    </div>
+    {% include 'footer.html'%}
+
+</body>
+
+</html>

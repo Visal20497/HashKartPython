@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href={{url_for('static',filename='bootstrap.min.css' )}}>
+    <title>🍹 -cart</title>
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 my-2">
+                {% for item in carts %}
+                <div class="card m-1 p-1 bg-success-subtle" style="width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{item.name}}</h5>
+                        <p class="card-text">Rs. {{item.price}}</p>
+                        <p class="card-text">
+                        <div class="d-flex align-item-center justify-content-end">
+                            <form action="/remove-from-cart" method="post" onchange="this.form.submit()"
+                                class="mx-1 p-1" id="{{item.id}}">
+                                <input type="hidden" id="{{item.id}}" name="product_id" value="{{item.id}}">
+                                <button type="submit" class="btn btn-outline-secondary bg-danger text-light">-</button>
+                            </form>
+                            <div class="mx-1 p-1"> {{item.quantity}}</div>
+                            <form action="/add-to-cart" method="post" onchange="this.form.submit()" class="mx-1 p-1"
+                                id="{{item.id}}">
+                                <input type="hidden" id="{{item.id}}" name="product_id" value="{{item.id}}">
+                                <button type="submit" class="btn btn-outline-secondary bg-success text-light">+</button>
+                            </form>
+                        </div>
+                        </p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-md-4 my-2">
+                <div>
+                    {% if carts|length > 0 %}
+                    <h5>Total Ietms:</h5><br>
+                    {% for payment in carts%}
+                    <p>{{payment.name}} - {{payment.quantity}} x Rs. {{payment.price}}</p>
+                    {% endfor %}
+                    <h5>Total:
+                        Rs. {{total_amount}}
+                    </h5>
+                    <div class="text-center m-3 p-2">
+                        <form action="/create-checkout-session" method="post" >
+                            <button class="btn btn-warning" type="submit">Make Payment</button>
+                        </form>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center mt-5 mb-5">
+        <div class="text-center">
+            {% if carts|length == 0 %}
+            <p class="text-center text-danger">No Product added in Cart, please add some product from <a href="/">Home
+                    page</a></p>
+            {% endif %}
+        </div>
+    </div>
+    {% include 'footer.html'%}
+</body>
+
+</html>

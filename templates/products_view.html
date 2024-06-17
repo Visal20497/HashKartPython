@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> -Products</title>
+</head>
+
+<body>
+    <h1>Register</h1>
+    <p>{{token}}</p>
+    {% if error %}
+    <p>{{ error}}</p>
+
+    {% endif %}
+    <form action="/register" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required placeholder="Enter your name"></br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required></br>
+        <label for="username">Password:</label>
+        <input type="password" id="username" name="password" required placeholder="Enter your password"></br>
+        <label for="username">Phone:</label>
+        <input type="text" id="username" name="phone" required placeholder="Enter your mobile no."></br>
+        <input type="submit" value="Register">
+    </form>
+    <p>Already have an account? <a href="/login">Login</a></p>
+
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href={{url_for('static',filename='bootstrap.min.css' )}}>
+    <title>🍹 -HashKart</title>
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    <form action="/filter-product" method="post">
+    <div class="container-fluid">
+        <div class="row bg-danger-subtle">
+            <div class="col col-md-2 d-flex flex-column px-2  border-end bg-secondary-subtle">
+                <div>
+                   <form action="/filter-product" method="post">
+                    <select type="submit"  onchange="this.form.submit()" name="sort"  class="mb-3 mt-3">
+                        <option value="">Sort by *</option>
+                        <option value="name-asc"  {% if request.form.get('sort') == 'name-asc' %}selected{% endif %}>Name A-Z</option>
+                        <option value="name-desc" {% if request.form.get('sort') == 'name-desc' %}selected{% endif %}>Name Z-A</option>
+                        <option value="price-asc"  {% if request.form.get('sort') == 'price-asc' %}selected{% endif %}>Price Low to High</option>
+                        <option value="price-desc"  {% if request.form.get('sort') == 'price-desc' %}selected{% endif %}>Price High to Low</option>
+                    </select>
+                   </form>
+                </div>
+                <hr>
+                <div>
+                  <form action="/filter-product"  method="post">
+                    <h5>Filter by category *</h5>
+                    {% for product_categorie in product_categories %}
+                    <div class="d-flex justify-content-between m-1">
+                        {{product_categorie}} <input  type="radio" name="category" onchange="this.form.submit()"
+                        {% if request.form.get('category') == product_category %}checked{% endif %}
+                         value="{{product_categorie}}">
+                    </div>
+                    {% endfor %}
+                  </form>
+                </div>
+                <hr>
+                <div>
+                    <h5> Filter by brand *</h5>
+                    {% for product_brands in product_brands %}
+                    <div class="d-flex justify-content-between">
+                        {{ product_brands }} <input type='radio' name="brand" onchange="this.form.submit()" value="{{product_brands}}">
+                    </div>
+                    {% endfor %}
+                </div>
+                <hr>
+                <div>
+                    <form action="/" method="get">
+                        <button type="submit"  class="btn btn-danger m-1">Reset All</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col col-md-9 m-2 p-2 ms-5">
+                <h3 class="text-success text-center">MY HOME</h3>
+                <div class="-mx-5 d-flex justify-content-evenly align-item-center   flex-wrap">
+                    {% for product in products %}
+                    <div class="card m-1 p-1" style="width: 18rem;">
+                        <img src="{{product.image_url}}" style="width:120px;" class="card-img-top">
+                        <div class="card-body">
+                            <h6 class="card-title">{{product.name}}</h6>
+                            <p class="card-text">Brand : {{product.brand}}</p>
+                            <p class="card-text">Cartegory: {{product.category}}</p>
+                            <p class="card-text">Rs.{{product.price}}</p>
+                            <!-- <p class="card-text">{{product.description}}</p> -->
+                            <form action="/add-to-cart" id="{{ product.id }}" method="post">
+                                <input type="hidden" name="product_id" value="{{ product.id }}">
+                                <button type="submit" class="btn btn-primary">Add to Cart</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'footer.html'%}
+</form>
+</body>
+
+</html>

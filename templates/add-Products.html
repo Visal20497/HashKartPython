@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href={{url_for('static',filename='bootstrap.min.css' )}}>
+    <title>🍹 -add products</title>
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    <div class="d-flex  align-items-start justify-content-start m-2">
+        {% if error %}
+        <p>{{ error}}</p>
+        {% endif %}
+        <form action="./create-product" style='width: 300px !important;' method="post"
+            class=" m-2 p-2 bg-info-subtle form-control d-flex container flex-column justify-content-center align-items-center">
+            <h3 class="text-center">New Product</h3>
+            <input type="text" name="name" required placeholder="Enter Product name..."></br>
+            <input type="text" name="brand" placeholder="Product Brand..." required></br>
+            <input type="text" name="category" required placeholder="Product category..."></br>
+            <input type="text" name="price" required placeholder="Product Price"></br>
+            <input type="text" name="image_url" required placeholder="Product image url"></br>
+            <textarea name="description" id="description" required placeholder="Product Description..."></textarea></br>
+            <input class="btn btn-primary" type="submit" value="Save">
+        </form>
+        <table class="mx-2  table table-striped ">
+            <thead>
+                <tr class="fs-5 fw-bolder p-2 text-center">
+                    <td>Product Name</td>
+                    <td>Product Brand</td>
+                    <td>Product Category</td>
+                    <td>Product Price</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr class="text-center">
+                    <td>{{product.name}}</td>
+                    <td>{{product.brand}}</td>
+                    <td>{{product.category}}</td>
+                    <td>Rs.{{product.price}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% include 'footer.html'%}
+
+</body>
+
+</html>
